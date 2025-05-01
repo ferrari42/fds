@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 5  // Maximum number of orders
+
+class PizzaParlor {
+    int orders[MAX];
+    int front, rear;
+
+public:
+    PizzaParlor() {
+        front = -1;
+        rear = -1;
+    }
+
+    // Place order
+    void placeOrder(int order) {
+        if ((rear + 1) % MAX == front) {
+            cout << "Order queue is full! Cannot place more orders.\n";
+            return;
+        }
+
+        if (front == -1) front = 0;
+        rear = (rear + 1) % MAX;
+        orders[rear] = order;
+        cout << "Order number " << order << " placed successfully.\n";
+    }
+
+    // Serve order
+    void serveOrder() {
+        if (front == -1) {
+            cout << "No orders to serve.\n";
+            return;
+        }
+
+        cout << "Order number " << orders[front] << " served.\n";
+
+        if (front == rear) {
+            front = rear = -1;  // Queue becomes empty
+        } else {
+            front = (front + 1) % MAX;
+        }
+    }
+
+    // Display pending orders
+    void displayOrders() {
+        if (front == -1) {
+            cout << "No pending orders.\n";
+            return;
+        }
+
+        cout << "Pending orders: ";
+        int i = front;
+        while (true) {
+            cout << orders[i] << " ";
+            if (i == rear) break;
+            i = (i + 1) % MAX;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    PizzaParlor p;
+    int choice, orderNo = 1;
+
+    while (true) {
+        cout << "\n1. Place Order\n2. Serve Order\n3. Display Orders\n4. Exit\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            p.placeOrder(orderNo++);
+            break;
+        case 2:
+            p.serveOrder();
+            break;
+        case 3:
+            p.displayOrders();
+            break;
+        case 4:
+            cout << "Thank you for visiting!\n";
+            return 0;
+        default:
+            cout << "Invalid choice.\n";
+        }
+    }
+}
