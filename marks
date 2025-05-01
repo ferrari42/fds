@@ -1,0 +1,47 @@
+def input_marks():
+    marks = []
+    n = int(input("Enter number of students: "))
+    print("Enter marks (enter -1 if student was absent):")
+    for i in range(n):
+        m = int(input(f"Student {i+1}: "))
+        marks.append(m)
+    return marks
+
+def average_score(marks):
+    valid_marks = [m for m in marks if m != -1]
+    if not valid_marks:
+        return 0
+    return sum(valid_marks) / len(valid_marks)
+
+def highest_lowest_score(marks):
+    valid_marks = [m for m in marks if m != -1]
+    if not valid_marks:
+        return None, None
+    return max(valid_marks), min(valid_marks)
+
+def count_absent(marks):
+    return marks.count(-1)
+
+def highest_frequency_score(marks):
+    from collections import Counter  # fixed spelling: "collection" → "collections"
+    valid_marks = [m for m in marks if m != -1]
+    if not valid_marks:
+        return None, 0
+    freq = Counter(valid_marks)
+    most_common = freq.most_common(1)[0]
+    return most_common[0], most_common[1]
+
+# ---------- Main Program ----------
+marks = input_marks()
+print("\n----- Statistics -----")
+
+print(f"Average Score: {average_score(marks):.2f}")
+
+high, low = highest_lowest_score(marks)
+print(f"Highest Score: {high}")
+print(f"Lowest Score: {low}")
+
+print(f"Absent Students: {count_absent(marks)}")
+
+score, freq = highest_frequency_score(marks)
+print(f"Score with Highest Frequency: {score} occurred {freq} times")
