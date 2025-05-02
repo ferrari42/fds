@@ -1,0 +1,78 @@
+def selection_sort(marks):
+    for i in range(len(marks)):
+        min_idx = i
+        for j in range(i + 1, len(marks)):
+            if marks[j] < marks[min_idx]:
+                min_idx = j
+        marks[i], marks[min_idx] = marks[min_idx], marks[i]
+
+    print("\nMarks after performing Selection Sort:")
+    for mark in marks:
+        print(mark)
+
+
+def bubble_sort(marks):
+    n = len(marks)
+    for i in range(n - 1):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if marks[j] > marks[j + 1]:
+                marks[j], marks[j + 1] = marks[j + 1], marks[j]
+                swapped = True
+        if not swapped:
+            break
+
+    print("\nMarks after performing Bubble Sort:")
+    for mark in marks:
+        print(mark)
+
+
+def top_five_marks(marks):
+    print("\nTop 5 Marks are:")
+    print(*marks[::-1][:5], sep="\n")
+
+
+# -------------------- Main Program --------------------
+
+marks = []
+n = int(input("Enter number of students whose marks are to be displayed: "))
+print(f"Enter marks for {n} students (press ENTER after each):")
+for _ in range(n):
+    ele = int(input())
+    marks.append(ele)
+
+print(f"\nOriginal Marks of {n} students:")
+print(marks)
+
+while True:
+    print("\n--------------- MENU ---------------")
+    print("1. Selection Sort of the marks")
+    print("2. Bubble Sort of the marks")
+    print("3. Exit")
+
+    choice = int(input("\nEnter your choice (1-3): "))
+
+    if choice == 1:
+        selection_sort(marks)
+        ask = input("\nDo you want to display top five marks? (yes/no): ").strip().lower()
+        if ask == 'yes':
+            top_five_marks(marks)
+        else:
+            print("\nThanks for using this program!")
+            break
+
+    elif choice == 2:
+        bubble_sort(marks)
+        ask = input("\nDo you want to display top five marks? (yes/no): ").strip().lower()
+        if ask == 'yes':
+            top_five_marks(marks)
+        else:
+            print("\nThanks for using this program!")
+            break
+
+    elif choice == 3:
+        print("\nThanks for using this program!")
+        break
+
+    else:
+        print("\nInvalid choice! Please select between 1 to 3.")
